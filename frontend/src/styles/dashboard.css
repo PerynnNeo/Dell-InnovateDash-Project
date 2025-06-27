@@ -1,0 +1,989 @@
+
+/* === Dashboard Layout === */
+.dashboard {
+  display: flex;
+  justify-content: center;
+  padding: 60px 10px;
+}
+
+.dashboard-container {
+  background: linear-gradient(to right, #ffe9f0, #f3e1ff);
+  width: 100%;
+  max-width: 1350px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-container .grid {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .dashboard-container .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-container .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-container .bg-white {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 100%;
+}
+
+/* === Cancer Risk Assessment Card === */
+.cancer-risk-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cancer-risk-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* === Risk Header === */
+.risk-header {
+  background: var(--gradient);
+  color: white;
+  padding: 1.5rem;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+    border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+.risk-header-bg {
+  position: relative;
+  z-index: 10;
+}
+.risk-header-content {
+  position: relative;
+  z-index: 10;
+}
+.risk-header::before,
+.risk-header::after {
+  content: '';
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+.risk-header::before {
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+}
+.risk-header::after {
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.risk-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.25),
+    0 0 10px rgba(255, 100, 100, 0.4);
+  margin-bottom: 1rem;
+}
+
+
+/* === Risk Score === */
+.risk-score-container {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+.risk-score {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+  transform: scale(0.75);
+}
+.risk-score.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+.risk-score-max {
+  font-size: 1.25rem;
+  opacity: 0.8;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+.risk-score-container:hover .risk-score {
+  color: #fff3f3;
+}
+
+.risk-warning-icon {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+.warning-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #fbbf24;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* === Risk Level === */
+.risk-level {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+.level-icon {
+  width: 1rem;
+  height: 1rem;
+}
+.level-text {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+}
+
+/* === Progress Bar === */
+.risk-progress-container {
+  width: 100%;
+}
+.risk-progress-bar {
+  width: 100%;
+  height: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.risk-progress-fill {
+  height: 100%;
+  background-color: white;
+  border-radius: 9999px;
+  transition: width 2s ease-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* === Risk Content === */
+.risk-content {
+  padding: 1.5rem;
+}
+.risk-breakdown-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.breakdown-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+}
+
+/* === Risk Factors === */
+.risk-factors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.risk-factor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  transition: all 0.4s ease-in-out;
+  transform: translateX(1rem);
+  opacity: 0;
+}
+.risk-factor-item:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.02);
+}
+.risk-factor-item.loaded {
+  opacity: 1;
+  transform: translateX(0);
+}
+.factor-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.factor-icon {
+  font-size: 1.125rem;
+}
+.factor-details {
+  display: flex;
+  flex-direction: column;
+}
+.factor-name {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.875rem;
+}
+.factor-description {
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+.factor-points {
+  padding: 0.25rem 0.75rem;
+  background: var(--gradient);
+  color: white;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* === Action Buttons === */
+.risk-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.risk-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.risk-btn.primary {
+  background: var(--gradient);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.risk-btn.primary:hover {
+  /* background: linear-gradient(135deg, var(--hover), var(--primary)); */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.risk-btn.secondary {
+  background: white;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+.risk-btn.secondary:hover {
+  background-color: #fff0f4;
+  border-color: var(--hover);
+  transform: scale(1.05);
+}
+.btn-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+  transition: transform 0.3s ease;
+}
+.risk-btn:hover .btn-icon {
+  transform: translateX(0.25rem);
+}
+
+/* === Urgency Message === */
+.risk-urgency {
+  background-color: #fff1f2;
+  border: 1px solid #fca5a5;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.risk-urgency:hover {
+  background-color: #ffe4e6;
+}
+.urgency-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.urgency-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* === Animations === */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .risk-score {
+    font-size: 2rem;
+  }
+  .risk-score-max {
+    font-size: 1rem;
+  }
+  .risk-title {
+    font-size: 1rem;
+  }
+  .level-text {
+    font-size: 1rem;
+  }
+}
+
+/* === Desktop Grid Layout === */
+.desktop-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .desktop-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* === Mobile Tab Navigation === */
+.mobile-tabs {
+  display: block;
+  padding: 1rem;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 0.5rem;
+  background: #f9fafb;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.tab-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 0.5rem;
+}
+
+.tab-button.active {
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tab-button.active::before {
+  opacity: 1;
+}
+
+.tab-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.tab-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.tab-button.active .tab-icon {
+  transform: scale(1.1);
+}
+
+.tab-label {
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* === Mobile Tab Content === */
+.tab-content {
+  display: block;
+  padding: 1rem;
+  min-height: 60vh;
+}
+
+.tab-panel {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Responsive Visibility === */
+@media (min-width: 768px) {
+  .mobile-tabs,
+  .tab-content {
+    display: none;
+  }
+  
+  .desktop-grid {
+    display: grid;
+  }
+}
+
+@media (max-width: 767px) {
+  .desktop-grid {
+    display: none;
+  }
+  
+  .mobile-tabs,
+  .tab-content {
+    display: block;
+  }
+  
+  .dashboard {
+    padding: 20px 10px;
+  }
+  
+  .dashboard-container {
+    padding: 0;
+  }
+}
+
+/* Rationale styling */
+.factor-rationale {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 4px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+/* Severity-based styling for risk factor points */
+.severity-high {
+  color: #DC2626;
+  font-weight: bold;
+}
+
+.severity-medium {
+  color: #D97706;
+  font-weight: bold;
+}
+
+.severity-low {
+  color: #059669;
+  font-weight: bold;
+}
+
+/* Ensure factor details have proper spacing */
+.factor-details {
+  flex: 1;
+  min-width: 0; /* Allows text to wrap properly */
+}
+
+.factor-description {
+  font-size: 0.875rem;
+  color: #4B5563;
+  margin-top: 2px;
+}
+
+.factor-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* === Risk Factors Scrolling === */
+
+
+/* Scroll indicator animation */
+/* @keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: rotate(90deg) translateY(0);
+  }
+  40% {
+    transform: rotate(90deg) translateY(-3px);
+  }
+  60% {
+    transform: rotate(90deg) translateY(-2px);
+  }
+}
+
+.scroll-indicator {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-indicator:hover {
+  opacity: 1;
+}
+
+/* Fade effect for scrollable content */
+/* .risk-factors-scroll-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.8));
+  pointer-events: none;
+} */
+
+/* === Risk Factors Scrollbar Hiding === */
+.risk-factors-scroll-container {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+.risk-factors-scroll-container::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+.risk-factors-scroll-container::-webkit-scrollbar-track {
+  display: none !important;
+  background: transparent !important;
+}
+
+.risk-factors-scroll-container::-webkit-scrollbar-thumb {
+  display: none !important;
+  background: transparent !important;
+}
+
+.risk-factors-scroll-container::-webkit-scrollbar-corner {
+  display: none !important;
+  background: transparent !important;
+}
+
+.risk-factors-scroll-container{
+  /* stop leaking out of the card */
+  margin-right: 0;      /* ← remove the –8 px */
+  padding-right: 8px;   /* keep room for a scrollbar */
+}
+
+/* === Risk Simulator Specific Styles === */
+.risk-simulator-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.risk-simulator-current,
+.risk-simulator-simulated {
+  text-align: center;
+  flex: 1;
+}
+
+.risk-simulator-arrow {
+  color: white;
+  opacity: 0.8;
+  font-size: 1.5rem;
+}
+
+.risk-simulator-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.risk-simulator-reset-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.slider-container {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.risk-simulator-slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.risk-simulator-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.risk-simulator-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider-value-display {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.slider-value-display.positive {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.slider-value-display.negative {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.slider-value-display.neutral {
+  color: #6b7280;
+  background: rgba(107, 114, 128, 0.1);
+}
+
+/* Responsive adjustments for Risk Simulator */
+@media (max-width: 768px) {
+  .risk-simulator-comparison {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .risk-simulator-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .slider-container {
+    padding: 0.75rem;
+  }
+}
+
+.risk-factor-item-simulator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background-color: #f9fafb;
+  border: 1px solid #f3f4f6;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+.risk-factor-item-simulator:hover {
+  border-color: #e5e7eb;
+  background-color: #ffffff;
+}
+
+.factor-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 180px; /* Adjust width as needed */
+  flex-shrink: 0;
+}
+
+.slider-wrapper {
+  flex-grow: 1;
+}
+
+.factor-percentage-display {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  min-width: 40px;
+  text-align: center;
+}
+.factor-percentage-display.positive {
+  color: #DC2626; /* Red for increased risk */
+  background-color: #FEF2F2;
+}
+.factor-percentage-display.negative {
+  color: #059669; /* Green for reduced risk */
+  background-color: #ECFDF5;
+}
+.factor-percentage-display.neutral {
+  color: #6b7280;
+  background-color: #f3f4f6;
+}
+
+.risk-simulator-slider {
+  width: 100%;
+  height: 4px;
+  background-color: #e5e7eb;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  transition: background-color 0.2s ease;
+}
+.risk-simulator-slider:hover {
+  background-color: #d1d5db;
+}
+
+.risk-simulator-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #b0004e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.risk-simulator-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #b0004e;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 0.3rem;
+}
+ 
+
+/* === CORRECTED SCREENING COMPONENT CSS - Add to dashboard.css === */
+
+/* 1. Colored Header - FIXED with correct gradient */
+.screening-header {
+  background: linear-gradient(135deg, #b0004e 0%, #6a0dad 100%); /* Brand colors */
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.screening-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* 2. Priority-based Card Background Colors */
+.screening-card {
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.screening-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Priority background colors */
+.screening-card.priority-high,
+.screening-card.priority-urgent {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.screening-card.priority-medium,
+.screening-card.priority-needed {
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+}
+
+.screening-card.priority-low,
+.screening-card.priority-routine {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.screening-card.priority-general {
+
+    background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+/* 3. Provider Button Colors */
+.provider-button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f9fafb;
+  color: #374151;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.provider-button:hover {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+/* Main Action Button - FIXED with correct gradient */
+.main-action-button {
+  background: linear-gradient(135deg, #b0004e 0%, #6a0dad 100%); /* Brand colors */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.main-action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(176, 0, 78, 0.3); /* Brand color shadow */
+}
+
+.main-action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 4. Colored Priority Icons */
+.priority-icon-colored.high,
+.priority-icon-colored.urgent {
+  color: #ef4444;
+}
+
+.priority-icon-colored.medium,
+.priority-icon-colored.needed {
+  color: #f59e0b;
+}
+
+.priority-icon-colored.low,
+.priority-icon-colored.routine {
+  color: #22c55e;
+}
+
+.priority-icon-colored.general {
+  color: #3b82f6;
+}
+
+/* Footer styling */
+.screening-footer {
+  background-color: #f8fafc;
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
